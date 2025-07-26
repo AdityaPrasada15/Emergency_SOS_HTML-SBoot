@@ -14,6 +14,8 @@ public class SOSController {
     @PostMapping("/sos")
     public ResponseEntity<String> sendSOS(@RequestBody SOSRequestDTO sosRequestDTO){
         System.out.println("SOS triggered !! Message: " + sosRequestDTO.getMessage() + ", Phone: " + sosRequestDTO.getPhoneNumber());
+
+        //will implement sms as well as email service
         return ResponseEntity.ok("SOS message sent successfully.");
     }
 }
