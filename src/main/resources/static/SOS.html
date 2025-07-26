@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Emergency SoS App</title>
+    <script>
+        function sendSOS() {
+          fetch('http://localhost:8080/api/sos',{
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              message: 'Help me! I am in trouble.',
+              phoneNumber: '9999999999'
+            })
+          })
+          .then(response => response.json())
+          .then(data => alert('SOS Sent Successfully'))
+          .catch(error => console.error('Error:', error));
+        }
+    </script>
+</head>
+<body>
+<button onclick="sendSOS()">Send SOS</button>
+</body>
+</html>
