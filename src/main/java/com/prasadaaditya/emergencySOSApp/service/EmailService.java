@@ -1,6 +1,6 @@
-package Service;
+package com.prasadaaditya.emergencySOSApp.service;
 
-import jakarta.annotation.PostConstruct;
+import com.prasadaaditya.emergencySOSApp.dto.SOSRequestDTO;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -23,12 +23,11 @@ public class EmailService {
         this.javaMailSender = javaMailSender;
     }
 
-    @PostConstruct
-    public void sendSosEmail() throws MessagingException {
+    public void sendSosEmail(SOSRequestDTO sosRequestDTO) throws MessagingException {
 
         //get the current date & time
         LocalDateTime localDateTime = LocalDateTime.now();
-        String currentDateTime = localDateTime.format(DateTimeFormatter.ofPattern("YYYY-MM-DD HH:MM:SS"));
+        String currentDateTime = localDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
 
         //get the IP address
         String ipAddress;
@@ -41,7 +40,10 @@ public class EmailService {
         //get the ISP address and location-- later implementation with external API
 
         //Message to be sent
-        String message = "SOS Alert \n\n" +
+        String message = "\n SOS Alert \n" +
+                         "----------------\n" +
+                         "Message: " + sosRequestDTO.getMessage() + "\n" +
+                         "Phone: " + sosRequestDTO.getPhoneNumber() + "\n" +
                          "IP Address: " + ipAddress + "\n" +
                          "Time: " +currentDateTime;
 
@@ -49,15 +51,10 @@ public class EmailService {
         MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage, true);
 
         mimeMessageHelper.setSubject("EMERGENCY SoS Alert!!");
-
         mimeMessageHelper.setTo("adityaprasada97@yahoo.com");
-        mimeMessageHelper.setCc("aditya.prasada@outlook.com");
-
-        mimeMessageHelper.setText("Hi, I need help ASAP. PFB the details. Please connect with me.");
-        mimeMessageHelper.setText(message, false);
+        mimeMessageHelper.setText("Hi, I need help ASAP. PFB the details. Please connect with me. \n\n\n" + message);
 
         //location will be a part of the message- will implement later.
-
         //mimeMessageHelper.addAttachment();  //later will be used to send the photo
 
         mimeMessageHelper.setFrom("aditya257661@gmail.com");  //name

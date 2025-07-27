@@ -1,6 +1,6 @@
-package Service;
+package com.prasadaaditya.emergencySOSApp.service;
 
-import DTO.SOSRequestDTO;
+import com.prasadaaditya.emergencySOSApp.dto.SOSRequestDTO;
 import org.springframework.stereotype.Service;
 
 @Service

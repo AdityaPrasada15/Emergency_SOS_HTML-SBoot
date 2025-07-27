@@ -1,4 +1,4 @@
-package DTO;
+package com.prasadaaditya.emergencySOSApp.dto;
 
 public class SOSRequestDTO {
     private String message;
