@@ -22,23 +22,19 @@ public class SOSController {
 
     @PostMapping("/sos")
     public ResponseEntity<String> sendSOS(@RequestBody SOSRequestDTO sosRequestDTO) throws MessagingException {
-        //System.out.println("SOS triggered !! Message: " + sosRequestDTO.getMessage() + ", Phone: " + sosRequestDTO.getPhoneNumber());
 
-        //will implement sms as well as email service
+        //calling email_service and SMS-service
 
-        //calling email_service
+        //boolean smsSent = smsService.sendSosSms("7008432050, 9337813617", "SoS Alert !!, I Need help, Call me ASAP.");
         try {
             System.out.println("Sending SOS email....");
             emailService.sendSosEmail(sosRequestDTO);
-            System.out.println("Email Sent.");
-            return ResponseEntity.ok("SOS message sent successfully.");
+            System.out.println("Sending SOS message....");
+            smsService.sendSosSms(sosRequestDTO);
+            return ResponseEntity.ok("SOS mail sent successfully.");
         } catch (MessagingException e){
             e.printStackTrace();
-            return ResponseEntity.status(500).body("Failed to send SOS email.");
+            return ResponseEntity.status(500).body("Failed to send SOS alerts.");
         }
-
-        //calling sms_service
-        //smsService.sendSosSms(sosRequestDTO);
-
     }
 }
